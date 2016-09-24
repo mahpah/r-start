@@ -1,7 +1,7 @@
 import React from 'react';
 const { PropTypes } = React;
 import { connect } from 'react-redux';
-import { toggleTodo } from './reducer';
+import { toggleTodo } from '../actions';
 
 const Todo = ({
   onClick,

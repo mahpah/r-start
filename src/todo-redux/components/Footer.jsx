@@ -1,7 +1,7 @@
 import React from 'react';
 const { PropTypes } = React;
 import { connect } from 'react-redux';
-import { setVisibilityFilter } from './reducer';
+import { setVisibilityFilter } from '../actions';
 
 /**
  * Present component

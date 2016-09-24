@@ -1,5 +1,5 @@
-import { expect, log } from '../lib/expect';
-import { todos, todoApp } from './reducer';
+import { expect, log } from '../../lib/expect';
+import { todos, todoApp } from './index';
 
 const testAdd = () => {
   const before = [];

@@ -1,2 +1,3 @@
-# React app with self-tailored redux
-This demo show how to redux by yourself. All redux stuff can be found in `../lib/redux`.
+# React app with redux
+
+This demo show how to use redux utilities to create react app with ease

@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { v4 as idv4 } from 'uuid';
 
 /**
  * single todo reducer
@@ -69,24 +68,4 @@ const visibilityFilter = (state = 'SHOW_ALL', action) => {
 export const todoApp = combineReducers({
   todos,
   visibilityFilter,
-});
-
-export const addTodo = text => ({
-  type: 'ADD',
-  payload: {
-    text,
-    id: idv4(),
-  },
-});
-
-export const toggleTodo = id => ({
-  type: 'TOGGLE',
-  payload: {
-    id,
-  },
-});
-
-export const setVisibilityFilter = (filter) => ({
-  type: 'SET_FILTER',
-  payload: filter,
 });

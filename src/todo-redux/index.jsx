@@ -1,8 +1,7 @@
-import { TodoApp } from './TodoApp';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { store } from './store';
-import { Provider } from 'react-redux';
+import { AppRoot } from './components/AppRoot';
 
 const host = document.getElementById('app-host');
 if (!host) {
@@ -10,9 +9,7 @@ if (!host) {
 }
 
 const render = () => ReactDOM.render(
-  <Provider store={store} >
-    <TodoApp />
-  </Provider>,
+  <AppRoot store={store} />,
   host
 );
 
