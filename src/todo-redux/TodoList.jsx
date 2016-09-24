@@ -9,9 +9,11 @@ const Todo = ({
   text,
 }) => (
   <li
+    className="todo-item"
     onClick={onClick}
     style={{
       textDecoration: completed ? 'line-through' : 'initial',
+      opacity: completed ? 0.4 : 1,
     }}
   >{text}</li>
 );
@@ -26,7 +28,7 @@ export const TodoList = ({
   todos,
   onTodoClick,
 }) => (
-  <ul>
+  <ul className="todo-list">
     {todos.map(todo =>
       <Todo key={todo.id} {...todo} onClick={() => onTodoClick(todo.id)} />
     )}

@@ -18,7 +18,7 @@ const AddTodoDumb = ({
   };
 
   return (
-    <form onSubmit={onFormSubmit}>
+    <form className="todo-add" onSubmit={onFormSubmit}>
       <input
         type="text"
         ref={node => { input = node; }}

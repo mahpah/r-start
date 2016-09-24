@@ -39,7 +39,7 @@ module.exports = (env) => ({
       },
       {
         test: /\.scss/,
-        loaders: ['to-string', 'css', 'resolve-url', 'sass?sourceMaps'],
+        loaders: ['style', 'css', 'sass?sourceMaps'],
       },
     ],
   },
