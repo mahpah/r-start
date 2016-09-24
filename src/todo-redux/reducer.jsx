@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-let counter = 0;
+import { v4 as idv4 } from 'uuid';
 
 /**
  * single todo reducer
@@ -56,7 +56,7 @@ export const todos = (state = [], action) => {
   return state;
 };
 
-const filter = (state = 'SHOW_ALL', action) => {
+const visibilityFilter = (state = 'SHOW_ALL', action) => {
   const { type, payload } = action;
 
   if (type === 'SET_FILTER') {
@@ -68,14 +68,14 @@ const filter = (state = 'SHOW_ALL', action) => {
 
 export const todoApp = combineReducers({
   todos,
-  visibilityFilter: filter,
+  visibilityFilter,
 });
 
 export const addTodo = text => ({
   type: 'ADD',
   payload: {
     text,
-    id: counter++,
+    id: idv4(),
   },
 });
 
