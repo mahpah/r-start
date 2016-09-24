@@ -25,3 +25,15 @@ export const createStore = (reducer) => {
     subscribe,
   };
 };
+
+/**
+ *
+ */
+export const combineReducers = (reducers) =>
+  (state = {}, action) => Object.keys(reducers).reduce(
+    (memo, key) => ({
+      ...memo,
+      [key]: reducers[key](state[key], action),
+    }),
+    {}
+  );

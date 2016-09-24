@@ -1,1 +1,1 @@
-import './todo/reducer';
+import './todo';

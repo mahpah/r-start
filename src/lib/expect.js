@@ -1,9 +1,11 @@
 function isEqual(item1, item2) {
   if (item1 instanceof Array && item2 instanceof Array) {
+    // eslint-disable-next-line
     return isArrayEqual(item1, item2);
   }
 
   if (typeof item1 === 'object' && typeof item2 === 'object') {
+    // eslint-disable-next-line
     return isObjectEqual(item1, item2);
   }
 
@@ -64,6 +66,13 @@ function Wrapper(anything) {
         return;
       }
 
+      /* eslint-disable */
+      console.group('Test failed');
+      console.log('Exepected:', thing);
+      console.log('Actual:', anything);
+      console.groupEnd();
+      /* eslint-enable */
+
       throw new Error(`${anything} is not equal to ${thing}`);
     },
 
@@ -72,6 +81,13 @@ function Wrapper(anything) {
       if (isEqual(thing, anything)) {
         return;
       }
+
+      /* eslint-disable */
+      console.group('Test failed');
+      console.log('Exepected:', thing);
+      console.log('Actual:', anything);
+      console.groupEnd();
+      /* eslint-enable */
 
       throw new Error(`value of ${anything} is not equal to ${thing}`);
     },
