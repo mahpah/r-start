@@ -1,55 +1,50 @@
-/**
- * single todo reducer
- * @param {object} state single todo
- */
-const todo = (state, action) => {
-  const { type, payload } = action;
-
-  if (type === 'ADD') {
-    return {
-      ...payload,
-      completed: false,
-    };
-  }
-
-  if (type === 'TOGGLE') {
-    if (state.id !== payload.id) {
-      return state;
-    }
-
-    return {
-      ...state,
-      completed: !state.completed,
-    };
-  }
-
-  return state;
-};
+import { todo } from './todo';
+import { combineReducers } from 'redux';
 
 /**
- * Todo list reducer
- * @param {array} state
+ * Todo map reducer
+ * @param {object} state
  * @parm
  */
-export const todos = (state = [], action) => {
+const byId = (state = {}, action) => {
   const { type, payload } = action;
 
-  if (type === 'ADD') {
-    return [...state, todo(undefined, action)];
-  }
-
-  if (type === 'TOGGLE') {
-    return state.map(t => todo(t, action));
+  if (type === 'ADD' || type === 'TOGGLE') {
+    return {
+      ...state,
+      [payload.id]: todo(state[payload.id], action),
+    };
   }
 
   if (type === 'DELETE') {
-    return state.filter(t => t.id !== payload.id);
+    state[payload.id] = undefined;
+    return state;
   }
 
   return state;
 };
 
-export const getVisibleTodos = (allTodos, filter) => {
+const allIds = (state = [], action) => {
+  const { type, payload } = action;
+  if (type === 'ADD') {
+    return [...state, payload.id];
+  }
+
+  if (type === 'DELETE') {
+    return state.filter(it => it !== payload.id);
+  }
+
+  return state;
+};
+
+export const todos = combineReducers({
+  byId,
+  allIds,
+});
+
+export const getVisibleTodos = (state, filter) => {
+  const allTodos = state.allIds.map(id => state.byId[id]);
+
   if (filter === 'completed') {
     return allTodos.filter(t => t.completed);
   }

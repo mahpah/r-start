@@ -8,7 +8,5 @@ const persistedState = loadState() || undefined;
 export const store = createStore(todoApp, persistedState);
 
 store.subscribe(throttle(() => {
-  saveState({
-    todos: store.getState().todos,
-  });
+  saveState(store.getState());
 }, 1000));
