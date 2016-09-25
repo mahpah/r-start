@@ -1,33 +1,43 @@
 import { todoApp } from './reducers';
 import { createStore } from 'redux';
 
-const addLog = (store) => {
-  const origDispatch = store.dispatch;
+const logger = (store) => (next) => {
+  /* eslint-disable no-console */
+  if (!console.group) {
+    return next;
+  }
 
   return (action) => {
     console.group(action.type);
     console.log('Before', store.getState());
     console.log('Action', action);
-    const returnValue = origDispatch(action);
+    const returnValue = next(action);
     console.log('After', store.getState());
     console.groupEnd(action.type);
     return returnValue;
   };
+  /* eslint-enable no-console */
 };
 
-const supportThenable = (store) => {
-  const isThenable = thing => typeof thing.then === 'function';
-  const next = store.dispatch;
+const depromisify = () => next => action => {
+  if (typeof action.then === 'function') {
+    return action.then(next);
+  }
 
-  return action => {
-    if (isThenable(action)) {
-      return action.then(next);
-    }
-
-    return next();
-  };
+  return next(action);
 };
 
-export const store = createStore(todoApp);
-store.dispatch = addLog(store);
-store.dispatch = supportThenable(store);
+const applyMiddleware = (middlewares) => (str) =>
+  middlewares.slice().reverse().forEach(m => {
+    // eslint-disable-next-line no-param-reassign
+    str.dispatch = m(str)(str.dispatch);
+  });
+
+const configStore = () => {
+  const store = createStore(todoApp);
+  const middlewares = [depromisify, logger];
+  applyMiddleware(middlewares)(store);
+  return store;
+};
+
+export const store = configStore();

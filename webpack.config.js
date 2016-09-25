@@ -61,9 +61,6 @@ module.exports = (env) => ({
       },
       sourceMap: false,
     })),
-    new webpack.HotModuleReplacementPlugin({
-      multiStep: true,
-    }),
   ]) : [],
 
   devServer: {
@@ -71,7 +68,5 @@ module.exports = (env) => ({
     stats: 'minimal',
     aggregateTimeout: 300,
     poll: 1000,
-    hot: true,
-    inline: true,
   },
 });
