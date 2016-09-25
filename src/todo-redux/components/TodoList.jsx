@@ -3,6 +3,7 @@ const { PropTypes } = React;
 import { connect } from 'react-redux';
 import { toggleTodo, deleteTodo } from '../actions';
 import { withRouter } from 'react-router';
+import { getVisibleTodos } from '../reducers';
 
 const Todo = ({
   onClick,
@@ -58,26 +59,11 @@ TodoList.propTypes = {
   onTodoDelete: PropTypes.func,
 };
 
-const getVisibleTodos = (todos, filter) => {
-  if (filter === 'completed') {
-    return todos.filter(t => t.completed);
-  }
-
-  if (filter === 'pending') {
-    return todos.filter(t => !t.completed);
-  }
-
-  return todos;
-};
-
 /**
  * params props is added by withRouter decorator
  */
 const mapStateToProps = (state, { params }) => ({
-  todos: getVisibleTodos(
-    state.todos,
-    params.filter
-  ),
+  todos: getVisibleTodos(state, params.filter),
 });
 
 // const mapDispatchToProps = (dispatch) => ({
