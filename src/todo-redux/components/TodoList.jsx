@@ -73,6 +73,7 @@ class VisibleTodoListRaw extends Component {
 
   fetchData() {
     const { filter, onFetchTodos } = this.props;
+    console.log(filter);
     onFetchTodos(filter);
   }
 
@@ -93,7 +94,7 @@ VisibleTodoListRaw.propTypes = {
  */
 const mapStateToProps = (state, { params }) => ({
   todos: getVisibleTodos(state, params.filter),
-  filter: params.filter,
+  filter: params.filter || 'all',
 });
 
 /**
