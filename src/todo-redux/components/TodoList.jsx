@@ -72,17 +72,16 @@ class VisibleTodoListRaw extends Component {
   }
 
   fetchData() {
-    const { filter, onFetchTodos, onRequestTodos } = this.props;
-    onRequestTodos(filter);
+    const { filter, onFetchTodos } = this.props;
     onFetchTodos(filter);
   }
 
   render() {
-    const { isFetching, todos } = this.props;
+    const { isFetching, ...rest } = this.props;
     if (isFetching) {
       return <p style={{ textAlign: 'center' }}>Loading...</p>;
     }
-    return <TodoList todos={todos} />;
+    return <TodoList {...rest} />;
   }
 }
 
@@ -90,7 +89,6 @@ VisibleTodoListRaw.propTypes = {
   filter: PropTypes.string,
   todos: PropTypes.arrayOf(PropTypes.object),
   onFetchTodos: PropTypes.func,
-  onRequestTodos: PropTypes.func,
   isFetching: PropTypes.bool,
 };
 

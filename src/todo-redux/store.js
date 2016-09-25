@@ -1,11 +1,19 @@
 import { createStore, applyMiddleware } from 'redux';
 import { todos } from './reducers';
-import promise from 'redux-promise';
 import createLogger from 'redux-logger';
+import thunk from 'redux-thunk';
+
+/**
+ * The function returned by another one called thunk
+ */
+// const thunk = (store) => next => action =>
+//   typeof action === 'function' ?
+//     action(next, store.getState) :
+//     action;
 
 const configStore = () => {
   const middlewares = [
-    promise,
+    thunk,
     createLogger(),
   ];
 

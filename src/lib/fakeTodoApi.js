@@ -1,6 +1,6 @@
 import { v4 } from 'uuid';
 
-const data = [{
+let data = [{
   id: v4(),
   text: 'learn React',
   completed: true,
@@ -20,8 +20,8 @@ const data = [{
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export const get = (filter) => {
-  return delay(Math.random() * 500)
+export const get = (filter) =>
+  delay(Math.random() * 500)
     .then(() => {
       switch (filter) {
         case 'all':
@@ -34,10 +34,38 @@ export const get = (filter) => {
           return data;
       }
     });
-};
+
+export const create = (text) =>
+  delay(Math.random() * 500)
+    .then(() => {
+      const newTodo = {
+        id: v4(),
+        text,
+        completed: false,
+      };
+
+      data = [...data, newTodo];
+      return newTodo;
+    });
+
+export const toggle = id =>
+  delay(Math.random() * 500)
+    .then(() => {
+      let ret;
+      data = data.map(todo => {
+        if (todo.id === id) {
+          ret = { ...todo, completed: !todo.completed };
+          return ret;
+        }
+        return todo;
+      });
+      return ret;
+    });
 
 const api = {
   get,
+  create,
+  toggle,
 };
 
 export default api;

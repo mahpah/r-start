@@ -7,15 +7,18 @@ export const byId = (state = {}, action) => {
   const { type, payload } = action;
 
   if (type === 'RECEIVE') {
-    const { response: todos } = payload;
-    const newTodos = todos.reduce((memo, item) => ({
-      ...memo,
-      [item.id]: item,
-    }), {});
+    const { response } = payload;
 
     return {
       ...state,
-      ...newTodos,
+      ...response.entities.todo,
+    };
+  }
+
+  if (type === 'ADD_SUCCESS' || type === 'TOGGLE_SUCCESS') {
+    return {
+      ...state,
+      ...payload.response.entities.todo,
     };
   }
 
