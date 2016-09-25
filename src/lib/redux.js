@@ -37,3 +37,9 @@ export const combineReducers = (reducers) =>
     }),
     {}
   );
+
+export const applyMiddleware = (middlewares) => (str) =>
+  middlewares.slice().reverse().forEach(m => {
+    // eslint-disable-next-line no-param-reassign
+    str.dispatch = m(str)(str.dispatch);
+  });
