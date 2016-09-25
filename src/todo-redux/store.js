@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware } from 'redux';
-import { todoApp } from './reducers';
+import { todos } from './reducers';
 import promise from 'redux-promise';
 import createLogger from 'redux-logger';
 
@@ -10,7 +10,7 @@ const configStore = () => {
   ];
 
   const store = createStore(
-    todoApp,
+    todos,
     applyMiddleware(...middlewares)
   );
 

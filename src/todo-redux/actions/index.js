@@ -33,3 +33,8 @@ export const fetchTodos = (filter) =>
   api.get(filter).then(response =>
     receiveTodos(filter, response)
   );
+
+export const requestTodos = filter => ({
+  type: 'REQUEST',
+  payload: { filter },
+});
