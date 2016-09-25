@@ -34,15 +34,7 @@ const todo = (state, action) => {
  * @parm
  */
 export const todos = (state = [], action) => {
-  const { type } = action;
-
-  /* supper ugly code
-  const identity = a => a;
-  return ({
-    ADD: () => [...state, todo(undefined, action)],
-    TOGGLE: () => state.map(t => todo(t, action)),
-  }[type] || identity)();
-  */
+  const { type, payload } = action;
 
   if (type === 'ADD') {
     return [...state, todo(undefined, action)];
@@ -50,6 +42,10 @@ export const todos = (state = [], action) => {
 
   if (type === 'TOGGLE') {
     return state.map(t => todo(t, action));
+  }
+
+  if (type === 'DELETE') {
+    return state.filter(t => t.id !== payload.id);
   }
 
   return state;
