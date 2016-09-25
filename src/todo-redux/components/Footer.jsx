@@ -1,56 +1,32 @@
 import React from 'react';
 const { PropTypes } = React;
-import { connect } from 'react-redux';
-import { setVisibilityFilter } from '../actions';
+import { Link } from 'react-router';
 
-/**
- * Present component
- */
-const Link = ({
-  active,
-  onClick,
-  children,
-}) => {
-  const style = {
-    textTransform: 'uppercase',
-    fontFamily: 'sans-serif',
-    color: active ? '#ddd' : '#222',
-    letterSpacing: '2px',
-    fontSize: '.8em',
-  };
-  return (
-    <a
-      style={style}
-      onClick={onClick}
-    >
-      {children}
-    </a>
-  );
+const linkStyle = {
+  textTransform: 'uppercase',
+  fontFamily: 'sans-serif',
+  color: '#888',
+  letterSpacing: '2px',
+  fontSize: '.8em',
+  textDecoration: 'none',
 };
+const FilterLink = ({
+  filter,
+  children,
+}) => (
+  <Link
+    style={linkStyle}
+    to={filter === 'all' ? '' : filter}
+    activeStyle={{ color: '#222' }}
+  >
+    {children}
+  </Link>
+);
 
-Link.propTypes = {
-  active: PropTypes.bool,
-  onClick: PropTypes.func,
+FilterLink.propTypes = {
+  filter: PropTypes.string,
   children: PropTypes.node,
 };
-
-/**
- * @param {object} props Container's own props, not Present's props
- */
-const stateToProp = (state, props) => ({
-  active: props.filter === state.visibilityFilter,
-});
-
-const dispatchToProp = (dispatch, props) => ({
-  onClick: () => {
-    dispatch(setVisibilityFilter(props.filter));
-  },
-});
-
-const FilterLink = connect(
-  stateToProp,
-  dispatchToProp
-)(Link);
 
 /**
  * Present component
@@ -58,13 +34,13 @@ const FilterLink = connect(
 export const Footer = () => (
   <div>
     <FilterLink
-      filter="SHOW_ALL"
+      filter="all"
     >All</FilterLink>&nbsp;
     <FilterLink
-      filter="SHOW_COMPLETED"
+      filter="completed"
     >Completed</FilterLink>&nbsp;
     <FilterLink
-      filter="SHOW_PENDING"
+      filter="pending"
     >Active</FilterLink>&nbsp;
   </div>
 );

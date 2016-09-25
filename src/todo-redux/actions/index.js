@@ -15,11 +15,6 @@ export const toggleTodo = id => ({
   },
 });
 
-export const setVisibilityFilter = (filter) => ({
-  type: 'SET_FILTER',
-  payload: filter,
-});
-
 export const deleteTodo = (id) => ({
   type: 'DELETE',
   payload: { id },
