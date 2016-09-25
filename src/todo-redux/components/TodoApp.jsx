@@ -11,8 +11,8 @@ export const TodoApp = () => (
   </div>
 );
 
-TodoApp.propTypes = {
-  params: React.PropTypes.shape({
-    filter: React.PropTypes.string,
-  }),
-};
+// TodoApp.propTypes = {
+//   params: React.PropTypes.shape({
+//     filter: React.PropTypes.string,
+//   }),
+// };

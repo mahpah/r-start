@@ -80,17 +80,30 @@ const mapStateToProps = (state, { params }) => ({
   ),
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  onTodoClick(id) {
-    dispatch(toggleTodo(id));
-  },
+// const mapDispatchToProps = (dispatch) => ({
+//   onTodoClick(id) {
+//     dispatch(toggleTodo(id));
+//   },
 
-  onTodoDelete(id) {
-    dispatch(deleteTodo(id));
-  },
-});
+//   onTodoDelete(id) {
+//     dispatch(deleteTodo(id));
+//   },
+// });
+
+/**
+ * The shorter way to write mapDispatchToProps.
+ * Used when props and action creator share the same signature
+ */
+const mapDispatchToProps = {
+  onTodoClick: toggleTodo,
+  onTodoDelete: deleteTodo,
+};
 
 export const VisibleTodoList = withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
 )(TodoList));
+
+VisibleTodoList.propTypes = {
+  params: PropTypes.object,
+};
