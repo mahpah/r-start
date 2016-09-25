@@ -1,7 +1,7 @@
 import React from 'react';
-const { PropTypes } = React;
+const { PropTypes, Component } = React;
 import { connect } from 'react-redux';
-import { toggleTodo, deleteTodo } from '../actions';
+import { toggleTodo, deleteTodo, fetchTodos } from '../actions';
 import { withRouter } from 'react-router';
 import { getVisibleTodos } from '../reducers';
 
@@ -59,22 +59,42 @@ TodoList.propTypes = {
   onTodoDelete: PropTypes.func,
 };
 
+class VisibleTodoListRaw extends Component {
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.filter !== prevProps.filter) {
+      this.fetchData();
+    }
+  }
+
+  fetchData() {
+    const { filter, onFetchTodos } = this.props;
+    onFetchTodos(filter);
+  }
+
+  render() {
+    return <TodoList {...this.props} />;
+  }
+}
+
+VisibleTodoListRaw.propTypes = {
+  filter: PropTypes.string,
+  todos: PropTypes.arrayOf(PropTypes.object),
+  onFetchTodos: PropTypes.func,
+};
+
+
 /**
  * params props is added by withRouter decorator
  */
 const mapStateToProps = (state, { params }) => ({
   todos: getVisibleTodos(state, params.filter),
+  filter: params.filter,
 });
-
-// const mapDispatchToProps = (dispatch) => ({
-//   onTodoClick(id) {
-//     dispatch(toggleTodo(id));
-//   },
-
-//   onTodoDelete(id) {
-//     dispatch(deleteTodo(id));
-//   },
-// });
 
 /**
  * The shorter way to write mapDispatchToProps.
@@ -83,13 +103,10 @@ const mapStateToProps = (state, { params }) => ({
 const mapDispatchToProps = {
   onTodoClick: toggleTodo,
   onTodoDelete: deleteTodo,
+  onFetchTodos: fetchTodos,
 };
 
 export const VisibleTodoList = withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(TodoList));
-
-VisibleTodoList.propTypes = {
-  params: PropTypes.object,
-};
+)(VisibleTodoListRaw));

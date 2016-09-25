@@ -1,9 +1,5 @@
 import { todoApp } from './reducers';
 import { createStore } from 'redux';
-import { saveState, loadState } from '../lib/localStorage';
-import throttle from 'lodash/throttle';
-
-const persistedState = loadState() || undefined;
 
 const addLog = (store) => {
   const origDispatch = store.dispatch;
@@ -19,9 +15,19 @@ const addLog = (store) => {
   };
 };
 
-export const store = createStore(todoApp, persistedState);
-store.dispatch = addLog(store);
+const supportThenable = (store) => {
+  const isThenable = thing => typeof thing.then === 'function';
+  const next = store.dispatch;
 
-store.subscribe(throttle(() => {
-  saveState(store.getState());
-}, 1000));
+  return action => {
+    if (isThenable(action)) {
+      return action.then(next);
+    }
+
+    return next();
+  };
+};
+
+export const store = createStore(todoApp);
+store.dispatch = addLog(store);
+store.dispatch = supportThenable(store);

@@ -17,8 +17,17 @@ const byId = (state = {}, action) => {
   }
 
   if (type === 'DELETE') {
+    // eslint-disable-next-line
     state[payload.id] = undefined;
     return state;
+  }
+
+  if (type === 'RECEIVE') {
+    const { response: todos } = payload;
+    return todos.reduce((memo, item) => ({
+      ...memo,
+      [item.id]: item,
+    }), {});
   }
 
   return state;
@@ -32,6 +41,11 @@ const allIds = (state = [], action) => {
 
   if (type === 'DELETE') {
     return state.filter(it => it !== payload.id);
+  }
+
+  if (type === 'RECEIVE') {
+    const { response: todos } = payload;
+    return todos.map(t => t.id);
   }
 
   return state;
