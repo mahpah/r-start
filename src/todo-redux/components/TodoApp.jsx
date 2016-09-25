@@ -3,14 +3,16 @@ import { VisibleTodoList } from './TodoList';
 import { AddTodo } from './AddTodo';
 import { Footer } from './Footer';
 
-export const TodoApp = ({ params }) => (
+export const TodoApp = () => (
   <div className="todo-app">
     <AddTodo />
-    <VisibleTodoList filter={params.filter || 'all'} />
+    <VisibleTodoList />
     <Footer />
   </div>
 );
 
 TodoApp.propTypes = {
-  params: React.PropTypes.object,
+  params: React.PropTypes.shape({
+    filter: React.PropTypes.string,
+  }),
 };

@@ -2,6 +2,7 @@ import React from 'react';
 const { PropTypes } = React;
 import { connect } from 'react-redux';
 import { toggleTodo, deleteTodo } from '../actions';
+import { withRouter } from 'react-router';
 
 const Todo = ({
   onClick,
@@ -69,10 +70,13 @@ const getVisibleTodos = (todos, filter) => {
   return todos;
 };
 
-const mapStateToProps = (state, ownProps) => ({
+/**
+ * params props is added by withRouter decorator
+ */
+const mapStateToProps = (state, { params }) => ({
   todos: getVisibleTodos(
     state.todos,
-    ownProps.filter
+    params.filter
   ),
 });
 
@@ -86,7 +90,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export const VisibleTodoList = connect(
+export const VisibleTodoList = withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(TodoList);
+)(TodoList));
